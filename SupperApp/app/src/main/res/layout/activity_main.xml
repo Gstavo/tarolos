@@ -1,10 +1,9 @@
 
 
-
-
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
 android:orientation="vertical"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
@@ -25,7 +24,7 @@ tools:context=".Menu" >
     android:layout_weight="4"
     android:layout_margin="8dp">
 
-    <TextView
+    <Button
         android:text = "@string/SinglePlayer"
         android:textSize = "32sp"
         android:background="@android:color/darker_gray"
@@ -35,7 +34,7 @@ tools:context=".Menu" >
         android:layout_weight="1"
         android:padding="8dp"/>
 
-    <TextView
+    <Button
         android:text = "@string/MultiPlayer"
         android:textSize = "32sp"
         android:background="@android:color/darker_gray"
@@ -45,17 +44,18 @@ tools:context=".Menu" >
         android:layout_weight="1"
         android:padding="8dp"/>
 
-    <TextView
-        android:text = "@string/QuickTutorial"
+    <Button
+        android:text = "@string/Stats"
         android:textSize = "32sp"
         android:background="@android:color/darker_gray"
 
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:onClick="startStats"/>
 
-    <TextView
+    <Button
         android:text = "@string/About_us"
         android:textSize = "32sp"
         android:background="@android:color/darker_gray"
