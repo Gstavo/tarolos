@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">flow-game</string>
+
+    <string name="menu_title">Super APP!</string>
+    <string name="SinglePlayer">SinglePlayer</string>
+    <string name="MultiPlayer">MultiPlayer</string>
+    <string name="Stats">Stats</string>
+    <string name="About_us">About us</string>
+
+    <string name="Autores">Autores:</string>
+    <string name="TGOD">TGOD</string>
+    <string name="Rks">Rks</string>
+    <string name="MetaBot">MetaBot</string>
+    <string name="Sawny">Sawny</string>
+    <string name="Rj">Mata Moscas</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_stats">StatsActivity</string>
+</resources>
