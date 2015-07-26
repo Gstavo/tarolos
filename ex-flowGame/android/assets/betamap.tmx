@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="16" tileheight="16" nextobjectid="19">
+ <tileset firstgid="1" name="MakerTileSet" tilewidth="16" tileheight="16">
+  <image source="../../../../MakerTileSet.png" width="637" height="1254"/>
+ </tileset>
+ <layer name="World" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6Dx/oXWbj2Ogr2kqqqq6usDPwnsHw==
+  </data>
+ </layer>
+ <layer name="Path" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztk1EKwCAMQwXvf5Gdcv/CRtuXuI014J/mRWPHaF3pmPH1FJeuL/Cdb+XgZ/a7/dz89QxV87WdUq/qmezM7eSr/z/JEPVTiPBJp3e+Kn71fzn4tDcyK7v6yeao8LOiGRT9qflqH3qHN71nJYNCJEPUMzP7Cn7rnzoB24T/cw==
+  </data>
+ </layer>
+ <objectgroup color="#005500" name="Player">
+  <object id="2" x="481" y="79" width="17" height="12">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

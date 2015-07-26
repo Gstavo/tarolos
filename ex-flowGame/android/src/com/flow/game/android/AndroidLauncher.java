@@ -13,6 +13,10 @@ public class AndroidLauncher extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+	// saves battery
+		config.useAccelerometer = false;
+		config.useCompass = false;
+
 		initialize(new FlowGame(), config);
 
 		/*
