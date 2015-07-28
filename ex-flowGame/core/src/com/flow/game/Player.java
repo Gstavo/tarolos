@@ -127,6 +127,7 @@ public class Player {
     public Player(TiledMap tMap, Vector2 position){
         this.moving = false;
         this.initialPosition = new Vector2(position);
+
         this.position = new Vector2(position);
         this.moved = false;
 

@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -24,6 +26,8 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+
+import java.util.Iterator;
 
 import javax.swing.text.Position;
 
@@ -90,14 +94,25 @@ public class Camera implements ApplicationListener {
 
         this.myInputProcessor = myInputProcessor;
 
-        this.unitScale = 1 / 128f; // 1 unit == 2^7 128 pixels
+        this.unitScale = 1 / 16f; // 1 unit == 2^7 128 pixels
 
-        this.tiledMap = new TmxMapLoader().load("black.tmx"); // width=1196 p = 9.34375 units
+      //  this.tiledMap = new TmxMapLoader().load("black.tmx"); // width=1196 p = 9.34375 units
+
+        this.tiledMap = new TmxMapLoader().load("map2.tmx");
+
+        MapLayers layers = tiledMap.getLayers();
+
+        MapProperties start = layers.get("START").getObjects().get(0).getProperties();
+
+        Vector2 p0 = new Vector2((Float)start.get("x"), (Float)start.get("y") );
+
+        p0.scl(unitScale);
+
+
 
         this.colisionDetection = new ColisionDetection(tiledMap);
 
-       // this.worldWidth = ((TiledMapTileLayer )tiledMap.getLayers().get("World")).getWidth() * unitScale * 50;
-
+       //this.worldWidth = ((TiledMapTileLayer )tiledMap.getLayers().get("World")).getWidth() * unitScale * 50;
         //this.worldHeight = ((TiledMapTileLayer )tiledMap.getLayers().get("World")).getHeight() * unitScale * 50;
 
 
@@ -106,25 +121,12 @@ public class Camera implements ApplicationListener {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        this.camW = w * unitScale;
-        this.camH = h * unitScale;
 
-        // width = 30 , height = 30 * ratio, fixing ecra dimentions
+        this.camW = 10; // w * camScale;
+        this.camH = 10 *(h/w);// h * camScale;
+
         cam = new OrthographicCamera(camW ,camH);
 
-        // Extra half camera view in order to fill the void on position (0,0) of camera view
-/*
-        cam = new OrthographicCamera();
-
-    //    camScale = new Vector2(10f / Gdx.graphics.getWidth(), 10f / Gdx.graphics.getHeight() ) ;
-//Sets this camera to an orthographic projection, centered at (viewportWidth/2, viewportHeight/2), with the y-axis pointing up or down.
-
-        cam.setToOrtho(false,1/camScale.x, 1/camScale.y );
-*/
-       // cam.viewportWidth = 10f; // 10 units
-       // cam.viewportHeight = cam.viewportWidth * ( h / w);
-
-        Vector2 p0 = new Vector2(cam.viewportWidth / 2f, cam.viewportHeight / 2f);
 
         cam.position.set(p0,0);
         cam.update();
