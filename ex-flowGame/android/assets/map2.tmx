@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" nextobjectid="11">
  <tileset firstgid="1" name="net216" tilewidth="8" tileheight="8">
-  <image source="../../../../Users/Tiago/Desktop/net216.gif" width="292" height="196"/>
+  <image source="net216.gif" width="292" height="196"/>
  </tileset>
  <layer name="path" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJztz7ENACAMBLEgFmP/ATIPSBniC1y4v+tV1fCcPdIdqZff/wEAAAAAAAAAAAAAAAAAgKwL3OdsJA==
+   eJztwzENAAAMA6DOv7/qqYw9kNBLqqqqqqqqqqqqqqqqqqqqqr4eRQxwxA==
   </data>
  </layer>
  <layer name="colision" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJztmAuKxSAMRbuYLqb7X9GjMIJIfjcftdNekGGeMXpSjWnP4zjOl7eddP0171hkjjfy9/7fxj/6ruZHz9t11PNT66vSTH5pHOe3Ohci/NcR50f7+vWszIcjeya/5G/kXRUDih+Jgbb3OVGsF/FbpTh2lN/Txz3rE5zfKw8zZaPxW/f/+Ht1DLKeteYD5e/7IjHQconHv+ecc/GxrC9yN1r9I/LkeW6cZf7Iu4Kl3tmdv/e9A7/kCz0DyDP17IFZ/NY8Gq3/0VxgqXepfk9OnMHfj4l+X8nit9YP0f1PjVvNjzz3SP6jxnn6emXye21W8t/K4Nf6PfW/ph34Ped9lHY+pXEZitx/2juvJYZP5/f09fr4P34Pf1ZsIt/aorlPm9/73o/ye2Xhr8r/mk+rXZQ/GoPV/BEh/J76r5I/+uybkPoXrf+r+CPf0yhZcx36/lfJnykrP2Ur8WfV+OjY8dxm5DnOFuU/mb+InszffETObyY/wk7Ze/d/RBX8FlG+nszv3fPjWiR+7x0gaRZ/tP5rfVkxiOYNyl+k/5a2nowY9NyZ+6n6/W+0kRq3P8/ub7Zm8XPnsW9SbKo0Y//vrI9f79dsns4f3QNP5r8V3QMcf0XdY5WUZzlbiz9KEv/sGFjrOXScZLMbv8WGWhsytlfF9x+vkPmQd0RqXJPGPysGs+dqsvBnNG09M/ealb/ZVvKvzjPe+x89q+P/yJnN1gr+1czjWpqeXv8hQu+/1crKq5L9rvxePvScZfNnnO2ZOWI3/tn5cSf+FXeD5dvmf28/ZcK8TQ==
+   eJztmYFuwyAMROnf5f+/aFqlTCgj2D6fDYGchDo18eHngKmyo5RybD6ypZ3Tmtvu/JLXzvyn3878p+fLvy//6fvyjzs7LfxReTEYUI8MfmkO1vpHfFbiv/ox9ST+2pPtN+P+l3yZXhE9OYq/9mb5RLJH8nv9M9ijnz86RxZ71vr39Cd2v7PEIjVi1JXFzopHcvfKy8+sH5K3V1+fD+41ip+lmfhH1KDm//2E4oVrlt6ZLdbz712znh2Z6vF/v//01wWLX/KKEqv/S96WXDI1E7/kFyEV/836l/jQPW05OzzysF/jkevu3CJHj/vsiwLfqJ5ez6+5x8zeiJG8RwjiB9hX4r+9r8O+Or/E7uFHfnNr9RR+TQ2i1tFw/qKrwdL8JXYf9KTuf9Jo5G/2HVCDqfityRNkmT+Ev7G3sqTdx737vfx33hahNbP0MinGy9/y1iqT/zaOwN/y1sYgQvmb8Y0z3LOerc/D6ikNc76Nd4WenmbNlz0Q1TXQvB8Q/QYPVCz+AuY9Qw2u+c+uqBqswM9Yv7Mraj+sxm+txcr8mlr0ro/u7RnnxMsft/5Zvv9+txHfwzyBP3KuVfhRRfI/QS+/b+8w5s/Wcfl7dv7IGs3AP+p/K3/zbz5+AJ9IXm4=
   </data>
  </layer>
- <objectgroup name="START" visible="0">
-  <object id="1" x="24.1857" y="15.0489" width="15.0489" height="16.1238">
+ <objectgroup name="START">
+  <object id="1" x="20.8468" y="23.3723" width="24.7848" height="22.269">
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="FINISH" visible="0">
-  <object id="8" x="430.984" y="15.8015" width="17.2233" height="16.2286">
+ <objectgroup name="FINISH">
+  <object id="8" x="330.817" y="21.1464" width="28.6709" height="27.5782">
    <ellipse/>
   </object>
  </objectgroup>
