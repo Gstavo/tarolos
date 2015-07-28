@@ -14,7 +14,7 @@
   </data>
  </layer>
  <objectgroup name="START" visible="0">
-  <object id="1" x="23.3585" y="24.8793" width="24.7848" height="22.269">
+  <object id="1" x="36.8585" y="36" width="1.64147" height="1.39831">
    <ellipse/>
   </object>
  </objectgroup>

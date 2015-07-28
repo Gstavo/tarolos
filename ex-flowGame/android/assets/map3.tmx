@@ -14,12 +14,12 @@
   </data>
  </layer>
  <objectgroup name="START" visible="0">
-  <object id="1" x="22.5" y="24" width="17.5" height="15.5">
+  <object id="1" x="33" y="28.5" width="1.25" height="1.75">
    <ellipse/>
   </object>
  </objectgroup>
  <objectgroup name="FINISH" visible="0">
-  <object id="7" x="455.667" y="456.667" width="15.6667" height="14.3333">
+  <object id="7" x="452.667" y="456.917" width="22.3333" height="21.0833">
    <ellipse/>
   </object>
  </objectgroup>
