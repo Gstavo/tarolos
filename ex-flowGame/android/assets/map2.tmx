@@ -3,23 +3,23 @@
  <tileset firstgid="1" name="net216" tilewidth="8" tileheight="8">
   <image source="net216.gif" width="292" height="196"/>
  </tileset>
- <layer name="path" width="64" height="64">
+ <layer name="PATH" width="64" height="64">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMA6DOv7/qqYw9kNBLqqqqqqqqqqqqqqqqqqqqqr4eRQxwxA==
+   eJztzzERACAQA8EwGMO/gNdDiYQUbLH93axkgJz9tFsabf7//gcAAAAAAAAAAAAAAAAAoO8CkrVmXA==
   </data>
  </layer>
- <layer name="colision" width="64" height="64">
+ <layer name="COLISION" width="64" height="64">
   <data encoding="base64" compression="zlib">
    eJztmYFuwyAMROnf5f+/aFqlTCgj2D6fDYGchDo18eHngKmyo5RybD6ypZ3Tmtvu/JLXzvyn3878p+fLvy//6fvyjzs7LfxReTEYUI8MfmkO1vpHfFbiv/ox9ST+2pPtN+P+l3yZXhE9OYq/9mb5RLJH8nv9M9ijnz86RxZ71vr39Cd2v7PEIjVi1JXFzopHcvfKy8+sH5K3V1+fD+41ip+lmfhH1KDm//2E4oVrlt6ZLdbz712znh2Z6vF/v//01wWLX/KKEqv/S96WXDI1E7/kFyEV/836l/jQPW05OzzysF/jkevu3CJHj/vsiwLfqJ5ez6+5x8zeiJG8RwjiB9hX4r+9r8O+Or/E7uFHfnNr9RR+TQ2i1tFw/qKrwdL8JXYf9KTuf9Jo5G/2HVCDqfityRNkmT+Ev7G3sqTdx737vfx33hahNbP0MinGy9/y1iqT/zaOwN/y1sYgQvmb8Y0z3LOerc/D6ikNc76Nd4WenmbNlz0Q1TXQvB8Q/QYPVCz+AuY9Qw2u+c+uqBqswM9Yv7Mraj+sxm+txcr8mlr0ro/u7RnnxMsft/5Zvv9+txHfwzyBP3KuVfhRRfI/QS+/b+8w5s/Wcfl7dv7IGs3AP+p/K3/zbz5+AJ9IXm4=
   </data>
  </layer>
- <objectgroup name="START">
-  <object id="1" x="20.8468" y="23.3723" width="24.7848" height="22.269">
+ <objectgroup name="START" visible="0">
+  <object id="1" x="23.3585" y="24.8793" width="24.7848" height="22.269">
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup name="FINISH">
-  <object id="8" x="330.817" y="21.1464" width="28.6709" height="27.5782">
+ <objectgroup name="FINISH" visible="0">
+  <object id="8" x="335.841" y="24.1121" width="24.3343" height="24.6124">
    <ellipse/>
   </object>
  </objectgroup>
