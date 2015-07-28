@@ -179,17 +179,22 @@ public class Camera implements ApplicationListener {
 
         int key = myInputProcessor.getKeyPressed();
 
+        player.updateSpeed();
+
         switch (key) {
 
             case (MyInputProcessor.TOUCH_DOWN):
 
             case (MyInputProcessor.TOUCH_DRAGGED ): {
 
-                                            // Screen possition             // Center in the midle
+                                            // Screen position             // Center in the middle
 
                 Vector2 vworldDirection = myInputProcessor.getLastTouch();
 
                 vworldDirection.scl(unitScale);
+
+                if(MyInputProcessor.TOUCH_DOWN == key) player.speedRequest( new Vector2(vworldDirection).add(player.getPosition()) );
+
 
                 player.updateDirection(vworldDirection);
 

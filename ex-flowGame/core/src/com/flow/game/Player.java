@@ -28,7 +28,10 @@ public class Player {
     private static final float RADIUS = 1;
     private static final float EXTRARADIUS = 2;
 
-    private int speed = 3; // unidades / s
+    private float speed = 3; // unidades / s
+
+    private float extraSpeed;
+    private float extraTimeSpeed;
 
     private Vector2 position;
     private Vector2 initialPosition;
@@ -127,6 +130,9 @@ public class Player {
         this.position = new Vector2(position);
         this.moved = false;
 
+        extraSpeed = 0;
+        extraTimeSpeed = 0;
+
         this.accumulatedMovement = new Vector2(Vector2.Zero);
         this.tiledMap = tMap;
 
@@ -185,12 +191,42 @@ public class Player {
             Vector2 velocity = new Vector2();
             Vector2 movement = new Vector2();
 
-            velocity.set(direction).scl(speed);
+            velocity.set(direction).scl(speed + extraSpeed);
             movement.set(velocity).scl(Gdx.graphics.getDeltaTime());
 
             position.add(movement);
 
         }
     }
+
+    public void updateSpeed(){
+
+        if( extraSpeed > 0) {
+
+            extraTimeSpeed-=Gdx.graphics.getDeltaTime();
+
+            if(extraTimeSpeed <= 0) {
+                extraTimeSpeed = 0; extraSpeed = 0;
+            }
+        }
+
+
+
+    }
+
+    public void speedRequest(Vector2 touch){
+
+        /* circle eq (x - c1)^2 + (y - c2)^2 <= Radius */
+
+        touch.sub(position);
+
+        if( Math.sqrt(touch.x) + Math.sqrt(touch.y) <= this.radius)
+        {
+            this.extraSpeed = 2;
+            this.extraTimeSpeed = 3;
+        }
+
+    }
+
 
 }

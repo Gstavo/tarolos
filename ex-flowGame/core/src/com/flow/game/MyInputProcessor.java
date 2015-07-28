@@ -42,14 +42,14 @@ public class MyInputProcessor extends InputAdapter {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        if(keyPressed == NOT_PRESSED) {
+  //      if(keyPressed == NOT_PRESSED) {
             lastTouch = (new Vector2(screenX, Gdx.graphics.getHeight() - screenY)).sub(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
 
             keyPressed = TOUCH_DOWN;
             return true;
-        }
-        else return false;
-        }
+    //    }
+      /// else return false;
+      }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
@@ -66,15 +66,10 @@ public class MyInputProcessor extends InputAdapter {
     }
 
     @Override
-    public boolean touchUp (int x, int y, int pointer, int button) {
-
-        /*
-        if(keyPressed == NOT_PRESSED ) keyPressed = TOUCH_UP;
-        else return false;
-
-        return true;*/
+    public boolean touchUp (int screenX, int screenY, int pointer, int button) {
 
         keyPressed = TOUCH_UP;
+
         return true;
     }
 

@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+
 import javax.swing.text.Position;
 
 /**
@@ -13,6 +15,7 @@ import javax.swing.text.Position;
 public class ColisionDetection {
 
     private static String COLISION_ID = "Colision";
+
     //  black tile id 286
 
     private TiledMapTileLayer colisionLayer;
@@ -38,9 +41,28 @@ public class ColisionDetection {
         Vector2 possibleColision = new Vector2(direction.scl(player.getRadius())).add(playerPosition);
 
 
-        TiledMapTileLayer.Cell cell = this.colisionLayer.getCell( (int)possibleColision.x,(int)possibleColision.y);
+        ArrayList<TiledMapTileLayer.Cell> colisionCells = new ArrayList<TiledMapTileLayer.Cell>();
 
-        if(cell != null) colision = true;
+        colisionCells.add(this.colisionLayer.getCell( (int) possibleColision.x,(int) possibleColision.y ));
+
+        float playerRadius = player.getRadius();
+
+        /* Check 4 points of wisp perimeter */
+
+        Vector2 sidePosition = new Vector2(playerRadius,0).add(playerPosition);
+        colisionCells.add(this.colisionLayer.getCell((int) sidePosition.x,(int) sidePosition.y));
+
+        sidePosition = new Vector2(-playerRadius,0).add(playerPosition);
+        colisionCells.add(this.colisionLayer.getCell((int) sidePosition.x,(int) sidePosition.y));
+
+        sidePosition = new Vector2(0,playerRadius).add(playerPosition);
+        colisionCells.add(this.colisionLayer.getCell((int) sidePosition.x,(int) sidePosition.y));
+
+        sidePosition = new Vector2(0,-playerRadius).add(playerPosition);
+        colisionCells.add(this.colisionLayer.getCell((int) sidePosition.x,(int) sidePosition.y));
+
+        for(TiledMapTileLayer.Cell cell : colisionCells)
+            if(cell != null) colision = true;
 
         return colision;
 
