@@ -19,26 +19,12 @@ public class MyInputProcessor extends InputAdapter {
     private int keyPressed = NOT_PRESSED;
 
     private Vector2 lastTouch;
-//    private Vector2 delta;
 
     /*
         Screen coordinates are in pixel and origin is in the upper left corner
 
                 AUto correct y = Gdx.graphics.getHeight() - screenY
          */
-
-    //  cam.viewportWidth
-    public Vector2 vconvertWorld(float unitScale){
-
-            return new Vector2(lastTouch.x * unitScale, lastTouch.y * unitScale);
-
-    }
-
-    public Vector2 vconvertWorld(Vector2 camScale){
-
-        return lastTouch.scl(camScale);
-
-    }
 
 /*
                 Camera screen
@@ -52,8 +38,6 @@ public class MyInputProcessor extends InputAdapter {
              h \/
 
 */
-
-
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -71,11 +55,8 @@ public class MyInputProcessor extends InputAdapter {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
 
         if(keyPressed == NOT_PRESSED) {
-        Vector2 newTouch = new Vector2(screenX, Gdx.graphics.getHeight() - screenY);
-        // delta will now hold the difference between the last and the current touch positions
-        // delta.x > 0 means the touch moved to the right, delta.x < 0 means a move to the left
-  //      delta = newTouch.cpy().sub(lastTouch);
-        lastTouch = newTouch.sub(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);
+
+        lastTouch = (new Vector2(screenX, Gdx.graphics.getHeight() - screenY)).sub(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
 
         keyPressed = TOUCH_DRAGGED;
         return true;
@@ -84,39 +65,39 @@ public class MyInputProcessor extends InputAdapter {
 
     }
 
+    @Override
+    public boolean touchUp (int x, int y, int pointer, int button) {
+
+        /*
+        if(keyPressed == NOT_PRESSED ) keyPressed = TOUCH_UP;
+        else return false;
+
+        return true;*/
+
+        keyPressed = TOUCH_UP;
+        return true;
+    }
+
+    public void destroy(){
+
+            this.lastTouch = Vector2.Zero;
+            this.keyPressed = NOT_PRESSED;
+
+    }
+
     public int getKeyPressed(){return keyPressed;}
 
     public Vector2 getLastTouch(){
         return lastTouch;
     }
-/*
-    public Vector2 getDelta(){
-        return delta;
-    }
-*/
+
     public void setKeyPressed(int keyPressed){this.keyPressed = keyPressed;}
 
     public void setLastTouch(Vector2 lastTouch){
         this.lastTouch = lastTouch;
     }
-/*
-    public void setDelta(Vector2 delta){
-        this.delta = delta;
-    }
-*/
 
-    @Override
-    public boolean touchUp (int x, int y, int pointer, int button) {
 
-        if(keyPressed == NOT_PRESSED) keyPressed = TOUCH_UP;
-            else return false;
 
-        return true;
-    }
-
-    public void destroy(){
-        lastTouch = Vector2.Zero;
-        keyPressed = NOT_PRESSED;
-    }
 
 }

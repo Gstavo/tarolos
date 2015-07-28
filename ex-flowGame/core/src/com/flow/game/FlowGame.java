@@ -48,7 +48,7 @@ public class FlowGame extends ApplicationAdapter {
 
 	@Override
 	public void render(){
-		cam.render();
+			cam.render();
 	}
 
 	@Override

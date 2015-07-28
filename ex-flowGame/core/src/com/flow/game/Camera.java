@@ -23,7 +23,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+
 
 import javax.swing.text.Position;
 
@@ -59,6 +59,7 @@ public class Camera implements ApplicationListener {
 
     private MyInputProcessor myInputProcessor;
 
+    private ColisionDetection colisionDetection;
 
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera cam; // controls user view
@@ -91,7 +92,9 @@ public class Camera implements ApplicationListener {
 
         this.unitScale = 1 / 128f; // 1 unit == 2^7 128 pixels
 
-        this.tiledMap = new TmxMapLoader().load("betamap.tmx"); // width=1196 p = 9.34375 units
+        this.tiledMap = new TmxMapLoader().load("black.tmx"); // width=1196 p = 9.34375 units
+
+        this.colisionDetection = new ColisionDetection(tiledMap);
 
        // this.worldWidth = ((TiledMapTileLayer )tiledMap.getLayers().get("World")).getWidth() * unitScale * 50;
 
@@ -151,20 +154,21 @@ public class Camera implements ApplicationListener {
 
         try {
             // draw rectangle x y -> bottom left corner
-            player.draw(batch, camW , camH);
+            player.draw(batch);
 
-            //font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 0, 0);
+            font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), camW/2 - 2, camH/2 - 2);
         } catch( NullPointerException e ){
             e.printStackTrace();
         }
 
         batch.end();
 
+        if (colisionDetection.ColisionDetection(player)) {
+           player.playerDied();
+        }
 
-        // RESET INPUT KEY, KEYNOTPRESSED = 0
+        // RESET INPUT KEY, KEYNOTPRESSED = 0 , lastToouch = zero
         myInputProcessor.destroy();
-
-       // System.out.println("World width:" + worldWidth + "World Height:" + worldHeight);
 
     }
 
@@ -173,120 +177,46 @@ public class Camera implements ApplicationListener {
      */
     private void handleInput() {
 
-        switch (myInputProcessor.getKeyPressed()) {
+        int key = myInputProcessor.getKeyPressed();
+
+        switch (key) {
 
             case (MyInputProcessor.TOUCH_DOWN):
-/*
-                Vector2 vscreenTouch = myInputProcessor.vconvertWorld(unitScale);
 
-                Vector2 worldVector = vscreenTouch.add( (new Vector2(Gdx.graphics.getWidth()/2f * unitScale , Gdx.graphics.getHeight()/2f * unitScale)));
-                player.updateMotion(worldVector);
-*/
-                //Proportion to camera added* (Gdx.graphics.getHeight()/Gdx.graphics.getWidth())
-
-
-
-            // TOUCH_DRAGGED
             case (MyInputProcessor.TOUCH_DRAGGED ): {
-                // Gdx Width 1196
-
-
-                //Vector2 vscreenTouch = myInputProcessor.vconvertWorld(unitScale); // assuming coordinates are centered on cam.viewpowerW / 2f
-
-   //             Vector2 vscreenTouch = myInputProcessor.vconvertWorld(unitScale).sub(cam.viewportWidth/2f , cam.viewportHeight/2f);
-//                myInputProcessor.setLastTouch(myInputProcessor.getLastTouch().sub(Gdx.graphics.getWidth()/2f , Gdx.graphics.getHeight()/2f ));
-   //             Vector2 vscreenTouch = myInputProcessor.vconvertWorld(camScale);
-
 
                                             // Screen possition             // Center in the midle
 
-                System.out.println("Cam width:" + camW + "Cam height:" + camH );
+                Vector2 vworldDirection = myInputProcessor.getLastTouch();
 
-                Vector2 vworldPosition = myInputProcessor.getLastTouch();
+                vworldDirection.scl(unitScale);
 
-                // player 5.0 : 3.2107022
-// lasttouc -419 :-299 -> scl "-26.1875:-18.6875 ->
-                //Converte para world scale   // centrra no jogador
-                vworldPosition.scl(unitScale);
+                player.updateDirection(vworldDirection);
 
-           //     vworldPosition.add(player.getPosition());
-
-
-                //Vector2 worldVector = vscreenTouch.add( player.getPosition() );
-                Vector2 movement = player.updateMotion(vworldPosition);
-
-                cam.translate(movement);
-                //cam.position.set(player.getPosition().x, player.getPosition().y, 0);
-                cam.update();
-
-                out.println("Cam Position " + cam.position.x + " : " + cam.position.y);
+                try {
+                    player.updateMotion();
+                    cam.position.set(player.getPosition().x, player.getPosition().y, 0);
+                    cam.update();
+                }catch(NoMovementException e){}
 
                 break;
             }
-            //TOUCH_UP
-            case ( MyInputProcessor.TOUCH_UP):{
-                // Player Stops Moving
-                break;
+            case ( MyInputProcessor.TOUCH_UP): {
+                player.updateDirection(Vector2.Zero);
+                player.setMoving(false);
             }
             default:
+                try {
+                    player.updateMotion();
+                    cam.position.set(player.getPosition().x, player.getPosition().y, 0);
+                    cam.update();
+                }
+                catch (NoMovementException e) {}
                 break;
         }
-/*
-
-        cam.zoom = MathUtils.clamp(cam.zoom, 0.1f, 100/cam.viewportWidth);
-
-        float effectiveViewportWidth = cam.viewportWidth * cam.zoom;
-        float effectiveViewportHeight = cam.viewportHeight * cam.zoom;
-
-        cam.position.x = MathUtils.clamp(cam.position.x, effectiveViewportWidth / 2f, worldWidth - effectiveViewportWidth / 2f);
-        cam.position.y = MathUtils.clamp(cam.position.y, effectiveViewportHeight / 2f, worldHeight - effectiveViewportHeight / 2f);
-
-        cam.update();
-*/
-
-       // cam.position.x = MathUtils.clamp(cam.position.x, camW / 2f, 32 - camW / 2f);
-       // cam.position.y = MathUtils.clamp(cam.position.y, camH / 2f, 32 - camH / 2f);
 
         cam.position.x = MathUtils.clamp(cam.position.x, 0 , 32);
         cam.position.y = MathUtils.clamp(cam.position.y, 0 , 32);
-
-
-
-         /*
-            Keeps the camera within the bounds of the world
-
-            Explanation:
-
-            We need to make sure the camera's zoom does not grow or shrink to values that
-            would invert our world, or show too much of our world. To do this, we can calculate
-            the effectiveViewportWidth and effectiveViewportHeight, which are just
-            the viewportWidth/height * zoom (this gives us what we can see in the world given
-            the current zoom). We can then clamp the value of the camera's zoom to values we
-            require. 0.1f to prevent being too zoomed in. 100/cam.viewportWidth to prevent
-            us being able to see more than the world's entire width.
-
-            The last two lines are responsible for making sure we can/ �t translate out of the
-            world boundaries. < 0, or more than 100 in either Axis
-
-            https://github.com/libgdx/libgdx/wiki/Orthographic-camera
-
-         */
-
-    }
-
-    /**
-     * More resize strategies at https://github.com/libgdx/libgdx/wiki/Viewports
-     */
-    /*
-    The following resize strategy will ensure that you will always see
-    10 units in the x axis no matter what pixel-width your device has.
-     */
-
-    public Vector2 convert(MyInputProcessor myInputProcessor, float unitScale){
-
-        Vector2 lastTouch = myInputProcessor.getLastTouch();
-
-        return new Vector2( lastTouch.x * unitScale, lastTouch.y * unitScale);
 
     }
 
@@ -297,17 +227,6 @@ public class Camera implements ApplicationListener {
         cam.update();
     }
 
-
-
-/*
-    //The following resize strategy will show less/more of the world depending on the resolution
-    @Override
-    public void resize(int width, int height) {
-        cam.viewportWidth = width/32f;  //We will see width/32f units!
-        cam.viewportHeight = cam.viewportWidth * height/width;
-        cam.update();
-    }
-*/
     @Override
     public void pause() {
     }
