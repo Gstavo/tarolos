@@ -51,11 +51,9 @@ public class MenuActivity extends Activity {
             }
         });
 
-        MediaPlayer menu_theme_sound;
-
-
-        menu_theme_sound = MediaPlayer.create(this, R.raw.sound_87_5);
-        menu_theme_sound.start();
+       // MediaPlayer menu_theme_sound;
+       // menu_theme_sound = MediaPlayer.create(this, R.raw.sound_87_5);
+       // menu_theme_sound.start();
 
 
 /*

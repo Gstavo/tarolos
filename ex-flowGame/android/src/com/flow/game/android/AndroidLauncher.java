@@ -1,6 +1,7 @@
 package com.flow.game.android;
 
 
+		import android.content.Intent;
 		import android.os.Bundle;
 
 		import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -8,6 +9,9 @@ package com.flow.game.android;
 		import com.flow.game.FlowGame;
 
 public class AndroidLauncher extends AndroidApplication {
+
+	FlowGame game;
+
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,12 +21,21 @@ public class AndroidLauncher extends AndroidApplication {
 		config.useAccelerometer = false;
 		config.useCompass = false;
 
-		initialize(new FlowGame(), config);
-
+		initialize(game = new FlowGame(), config);
+//ODO HANDLER
+		if( game.isGameOver() ) {
+			Intent iOver = new Intent(AndroidLauncher.this,GameOver.class);
+			startActivity(iOver);
+		}
 		/*
 		Intent intent = new Intent(this, com.flow.game.android.MenuActivity.class);
 		startActivity(intent);
 */
 	}
+/*
+	@Override
+	public void onActivityResult(int g, int, Intent){
 
+	}
+*/
 }

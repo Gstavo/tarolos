@@ -106,7 +106,7 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"/>
 
             <ImageView
-                android:drawable="@drawable/sawny"
+                android:background="@drawable/sawny"
                 android:contentDescription="@string/Sawny"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -127,7 +127,7 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:drawable="@drawable/tgod"
+                android:background="@drawable/tgod"
                 android:contentDescription="@string/TGOD"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -148,7 +148,7 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content"/>
 
             <ImageView
-                android:drawable="@drawable/rks"
+                android:background="@drawable/rks"
                 android:contentDescription="@string/Rks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -169,7 +169,7 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:drawable="@drawable/metabot"
+                android:background="@drawable/metabot"
                 android:contentDescription="@string/MetaBot"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -191,7 +191,7 @@ android:layout_height="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:src="@drawable/rj"
+                android:background="@drawable/rj"
                 android:contentDescription="@string/Rj"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

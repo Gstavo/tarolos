@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="64" height="64" tilewidth="8" tileheight="8" nextobjectid="28">
  <tileset firstgid="1" name="tilea4mackeditFBU" tilewidth="8" tileheight="8">
   <image source="tilea4mackeditFBU.png" width="512" height="480"/>
  </tileset>
@@ -8,7 +8,7 @@
    eJzt07ENwCAMRUGTGTITi2XESHTsElDSpkbIV1zvpy/XiKhAXOW1+g79AAAAAAAAAMBO7rKWfv369evXr1+/fv369evXr1+/fv369+1vn6z9Ux/OI3d/T7x/5v/Xr1//vwc94FG5
   </data>
  </layer>
- <layer name="COLISION" width="64" height="64">
+ <layer name="COLLISION" width="64" height="64">
   <data encoding="base64" compression="zlib">
    eJztmu1OgzAUhssY6F+nlzQ/LmzqbssZdX+NN+QhpgmSlrbnqy3jTU6AFda+fejpVtgbY1qIzQVu9xAHg9NmEtOykI4NsmJGDd73yGuX4J/C38rltRb/FP5zqsU/B3+sUv2/EfpruNZ1/eC9bf5i69m6xncOSfi3/G0fuMKX47RF8e9T7PgvoQ8k/KeM/+l8N43W0z7OvuPug5T8PzdGfONl7Jkjz3L718z/XP5jI7ZNEvO/ry4pdZ0xPcQVxHUX778k/pR7+x48P0A8Qjwl+Jfi78oLkv6fwfMLxCvEkZl/ypiz4fIfEsX/B3j+hPiCODPzl5h3qfVw5b9Y/hrSqmesWvlzaeW/8qfw58hBMfVIicqfs82Y76LOAxT+3Lyw/imi8M/tn6P+0vinBlVY/jlylUT9If5a7FPFVX+If83+Y8eQj7/WvIeRBn+Kf+n8pTH+YzzGSOJeyc0/pQ0l+1/549f/luCfuv4bOw9xqwT+se0InbOD8luIu0Zvf/xZbv43GR+qlsD/O+NvKY7nP9R5okT+nP9Dl84/pBr5c0qaf9sbs4Xo+v/7fcTxyr9+/hSt/Ff+Lv6+NU/M+kWN/DnXfLH8ba6e5mxXPk+ZA2Lyv6Z/H/9zj6svRSXz1/DPyR+7Vr4U/lj/K//5cklp8Ldlks8xffpp58s1+I/LS/OvxT+XXP7Hn2ny59DQ9lBMz3d9h1Vt/Ln9z/FPfae8Rv9z/DHvlEv3Acb/3Dl74/ePeac8dd00Nf+n+g/pYPz3P+adcqz/IXaNzvOf8fHA/gTxfmHb0+j4F8bTjog=
   </data>
@@ -20,6 +20,59 @@
  </objectgroup>
  <objectgroup name="FINISH" visible="0">
   <object id="7" x="452.667" y="456.917" width="22.3333" height="21.0833">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="RUNES">
+  <object id="9" name="SMALL_SIZERUNE" x="199.273" y="16.5455" width="0.909091" height="1.81818" visible="0">
+   <ellipse/>
+  </object>
+  <object id="10" name="SPEEDRUNE" x="222.727" y="170.909" width="1.45455" height="1.27273" visible="0">
+   <ellipse/>
+  </object>
+  <object id="11" name="DESTRUCTIONRUNE" x="226.182" y="364.182" width="2.54545" height="1.27273" visible="0">
+   <ellipse/>
+  </object>
+  <object id="12" name="TELEPORTATIONRUNE_0" x="199.333" y="90.3334" width="2.66667" height="4" visible="0">
+   <ellipse/>
+  </object>
+  <object id="13" name="TELEPORTATIONRUNE_1" x="360.667" y="412.667" width="4" height="5.33333" visible="0">
+   <ellipse/>
+  </object>
+  <object id="14" name="BIG_SIZERUNE" x="404" y="20.6667" width="4" height="6" visible="0">
+   <ellipse/>
+  </object>
+  <object id="15" name="SMALL_SIZERUNE" x="80" y="100.667" width="6.66667" height="4" visible="0">
+   <ellipse/>
+  </object>
+  <object id="18" name="SMALL_SIZERUNE" x="124" y="100" width="6" height="5.33333" visible="0">
+   <ellipse/>
+  </object>
+  <object id="19" name="BIG_SIZERUNE" x="62" y="395.333" width="4.66667" height="6.66667" visible="0">
+   <ellipse/>
+  </object>
+  <object id="20" name="BIG_SIZERUNE" x="62.6667" y="412.667" width="4.66667" height="5.33333" visible="0">
+   <ellipse/>
+  </object>
+  <object id="21" name="BIG_SIZERUNE" x="62.6667" y="428" width="5.33333" height="6.66667" visible="0">
+   <ellipse/>
+  </object>
+  <object id="22" name="BIG_SIZERUNE" x="60.6667" y="444.667" width="7.33333" height="6.66667" visible="0">
+   <ellipse/>
+  </object>
+  <object id="23" name="ENERGYRUNE" x="233.667" y="167" width="1.33333" height="1.66667" visible="0">
+   <ellipse/>
+  </object>
+  <object id="24" name="ENERGYRUNE" x="294.333" y="32" width="2.33333" height="2" visible="0">
+   <ellipse/>
+  </object>
+  <object id="25" name="ENERGYRUNE" x="327" y="316.333" width="2.66667" height="3.33333" visible="0">
+   <ellipse/>
+  </object>
+  <object id="26" name="ENERGYRUNE" x="14.6667" y="138" width="2.33333" height="3.33333" visible="0">
+   <ellipse/>
+  </object>
+  <object id="27" name="SPEEDRUNE" x="103.333" y="43" width="1.33333" height="1">
    <ellipse/>
   </object>
  </objectgroup>
