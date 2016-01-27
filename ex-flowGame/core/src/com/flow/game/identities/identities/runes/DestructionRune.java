@@ -21,7 +21,7 @@ public class DestructionRune extends Rune {
         sprite.setColor(color);
         loadRune(p);
 
-        effectDuration = 20;
+        effectDuration = 90;
         bonusRate = 3;
     }
 

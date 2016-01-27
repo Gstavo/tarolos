@@ -23,14 +23,12 @@ public class AndroidLauncher extends AndroidApplication {
 
 		initialize(game = new FlowGame(), config);
 //ODO HANDLER
+
+
 		if( game.isGameOver() ) {
 			Intent iOver = new Intent(AndroidLauncher.this,GameOver.class);
 			startActivity(iOver);
 		}
-		/*
-		Intent intent = new Intent(this, com.flow.game.android.MenuActivity.class);
-		startActivity(intent);
-*/
 	}
 /*
 	@Override

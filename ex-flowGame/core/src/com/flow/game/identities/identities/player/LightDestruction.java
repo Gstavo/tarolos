@@ -2,19 +2,22 @@ package com.flow.game.identities.identities.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.flow.game.identities.identities.WorldCell;
-import com.flow.game.identities.identities.WorldMap;
+import com.flow.game.identities.identities.World;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by Gustavo on 09/08/2015.
  */
 public class LightDestruction {
 
+
     public float extraRadius;
+    public float extraRadiusP = 2.5f;
 
     private Vector2 center;
 
@@ -34,11 +37,19 @@ public class LightDestruction {
 
     public float getDestructionRate(){ return destructionRate; }
 
+    public float getDestructionRadius() {
+        return destructionRadius;
+    }
+
+    public float getExtraRadius() {
+        return extraRadius;
+    }
+
     public void setPosition(Vector2 p){ center = p;}
 
     public void updatePlayerRadius(float playerRadius){
         nonDestructionRadius = playerRadius;
-        extraRadius = 0.8f*playerRadius;
+        extraRadius = extraRadiusP *playerRadius;
         destructionRadius = extraRadius + nonDestructionRadius;
     }
 
@@ -55,16 +66,16 @@ public class LightDestruction {
     }
 
     // returns dtotal damage to targets
-    public float destroyTargets(WorldMap worldMap){
+    public float destroyTargets(Collection<WorldCell> worldCells,TiledMapTile replacement,World world){
 
         float delta = Gdx.graphics.getDeltaTime();
         float tolaDamage = 0f;
-        Collection<WorldCell> cells = worldMap.getCells( playerCollisionPoints() );
 
-        for( WorldCell worldCell : cells )  {
+        for(WorldCell worldCell : worldCells){
             float potentialDamage = destructionRate * delta;
+
             if( worldCell.getCollision() == true ) {
-                tolaDamage +=worldCell.damage(potentialDamage, worldMap.getDestructionTile());
+                tolaDamage +=worldCell.damage(potentialDamage, replacement);
                 if(worldCell.getHitPoints() <= 0) {
                     cellDeadSound.play(0.8f);
                 }
@@ -91,7 +102,7 @@ public class LightDestruction {
             float alfaDelta = (float)(2 * Math.PI )/ circleCheck;
             float destructionDelta = (destructionRadius - nonDestructionRadius) / deepCheck;
 
-            ArrayList<Vector2> destructionPoints = new ArrayList<Vector2>();
+            HashSet<Vector2> destructionPoints = new HashSet<Vector2>();
 
             for(float l = destructionRadius ;l > nonDestructionRadius; l-=destructionDelta)
                 for (float alfa = 0; alfa <= 2 * Math.PI; alfa += alfaDelta) {

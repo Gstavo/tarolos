@@ -1,21 +1,21 @@
 package com.flow.game.identities.identities.player;
 
 import com.badlogic.gdx.math.Vector2;
-import com.flow.game.identities.identities.WorldMap;
+import com.flow.game.identities.identities.World;
 
 /**
  * Created by Gustavo on 12/08/2015.
  */
 public class BlastExplosion {
 
-    private WorldMap worldMap;
+    private World world;
 
     private boolean activated;
 
     private Vector2 camDimensions;
 
-    public BlastExplosion(WorldMap worldMap,Vector2 camDimensions){
-        this.worldMap = worldMap;
+    public BlastExplosion(World world,Vector2 camDimensions){
+        this.world = world;
         this.camDimensions = new Vector2(camDimensions);
     }
 
@@ -30,7 +30,7 @@ public class BlastExplosion {
 
         for(float w = min.x ; w < max.x ; w++)
             for(float h = min.y; h < max.y;h++){
-                worldMap.getWorldCell(new Vector2(w,h)).killCell();
+                world.getWorldCell(new Vector2(w,h)).killCell();
                 //TODO REMOVE COLISION TILES
             }
 

@@ -39,7 +39,6 @@ import static java.lang.Thread.sleep;
 // http://www.gamefromscratch.com/post/2014/05/01/LibGDX-Tutorial-11-Tiled-Maps-Part-2-Adding-a-character-sprite.aspx
 public class Camera implements ApplicationListener {
 
-    private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera cam; // controls user view
 
     private float unitScale; // 1 / 16 -> 16 pixels = 1 unit world
@@ -48,6 +47,11 @@ public class Camera implements ApplicationListener {
     private float camH;
 
     public Vector2 getCamDim(){ return new Vector2(camW,camH); }
+
+    public void sclCam(float f){ camW*=f;camH*=f;
+    cam.update();}
+
+    public OrthographicCamera getCam(){ return cam; }
 
     @Override
     public void create(){return;}
@@ -60,22 +64,19 @@ public class Camera implements ApplicationListener {
 
         this.unitScale = 1 / 16f; // 1 unit == 2^7 128 pixels
 
-
         /* Android camera view of the world*/
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
 
-        this.camW = 10; // w * camScale;
-        this.camH = 10 *(h/w);// h * camScale;
+        this.camW = 30; // w * camScale;
+        this.camH = 30 *(h/w);// h * camScale;
 
         cam = new OrthographicCamera(camW ,camH);
 
         cam.position.set(player.getPosition(), 0);
         cam.update();
-
-        this.renderer = new OrthogonalTiledMapRenderer(tiledMap, unitScale);
 
     }
 
@@ -85,11 +86,10 @@ public class Camera implements ApplicationListener {
 
         cam.update();
         batch.setProjectionMatrix(cam.combined);
-
+        //TODO WorldMap Render
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.setView(cam);
-        renderer.render();
+
 
     }
 

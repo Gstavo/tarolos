@@ -21,8 +21,8 @@ public class SpeedRune extends Rune{
 
         loadRune(p);
 
-        effectDuration = 4;
-        speedBonus = 2;
+        effectDuration = 35f;
+        speedBonus = 0.5f*Player.playerBaseSpeed;
     }
 
     public void playerEffect(Player p){

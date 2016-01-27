@@ -31,7 +31,7 @@ public class SizeRune extends Rune {
 
         loadRune(p);
 
-        effectDuration = 6;
+        effectDuration = 60;
         growth = g;
         sizeAlteration = g ? 1.3f : 0.7f;
     }

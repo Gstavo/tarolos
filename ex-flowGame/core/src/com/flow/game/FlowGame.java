@@ -3,32 +3,22 @@ package com.flow.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.flow.game.identities.identities.Camera;
 import com.flow.game.identities.identities.GameInterface;
-import com.flow.game.identities.identities.MyInputProcessor;
 import com.flow.game.identities.identities.WorldMap;
+import com.flow.game.identities.identities.MyInputProcessor;
+import com.flow.game.identities.identities.World;
 import com.flow.game.identities.identities.obstacle.Obstacle;
 import com.flow.game.identities.identities.player.Player;
-import com.flow.game.identities.identities.player.NoMovementException;
-import com.flow.game.identities.identities.runes.DestructionRune;
-import com.flow.game.identities.identities.runes.EnergyRune;
-import com.flow.game.identities.identities.runes.Rune;
-import com.flow.game.identities.identities.runes.SizeRune;
-import com.flow.game.identities.identities.runes.SpeedRune;
-import com.flow.game.identities.identities.runes.TeleportationRune;
 
 
 import java.util.ArrayList;
@@ -36,21 +26,23 @@ import java.util.Iterator;
 
 public class FlowGame extends ApplicationAdapter {
 
-	public static int WORLD_HEIGHT = 32;
-	public static int WORLD_WIDTH = 32;
+	private static String MAP_NAME = "alpha";
+
+	public static int WORLD_HEIGHT = 512;
+	public static int WORLD_WIDTH = 512;
 
 	public static float UNITSCALE;
 
-	private TiledMap tiledMap;
-	private WorldMap worldMap;
 
-	private Vector2 startPlace;
-	private Vector2 endPlace;
+	private boolean started = false;
+	private TiledMap tiledMap;
+	private World world;
+
+	AssetManager assetManager;
 
 	private Camera cam;
 
 	private Player player;
-	private boolean gameOver = false;
 	private GameInterface gameInterface;
 
 	private ArrayList<Obstacle> obstacles;
@@ -61,20 +53,28 @@ public class FlowGame extends ApplicationAdapter {
 	private MyInputProcessor myInputProcessor;
 
 	private Sound wispDeadSound;
-
 	private Music wispMusic;
 
-	private float unitScale; // TiledMap to WORLD
+	private WorldMap worldMap;
+
+
 
 
 	@Override
-	public void create(){
+	public void create() {
+		//TODO maploader initialization
+		worldMap.loadMap(MAP_NAME , assetManager);
+		if(!worldMap.isLoaded()){
+		}
+		initGame();
+	}
 
-		this.unitScale = 1/16f;
-		UNITSCALE = unitScale;
-
+	public void initGame(){
+		this.started = true;
+		assetManager = new AssetManager();
 		this.batch = new SpriteBatch();
 		this.font = new BitmapFont();
+			tiledMap = null;
 
 		wispMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/wisp_loop.wav"));
 		wispMusic.setLooping(true);
@@ -87,10 +87,10 @@ public class FlowGame extends ApplicationAdapter {
 		//Loading map information
 
 		this.obstacles = new ArrayList<Obstacle>();
-		loadMap();
+		world = worldMap.getWorld();
 
-		this.player = new Player(tiledMap,this.startPlace,worldMap);
-		worldMap.setPlayer(player);
+		this.player = new Player(tiledMap, world);
+		world.setPlayer(player);
 
 		myInputProcessor = new MyInputProcessor();
 		// input events triggers camera render
@@ -99,70 +99,20 @@ public class FlowGame extends ApplicationAdapter {
 
 		cam = new Camera();
 		cam.create(batch, player, myInputProcessor, tiledMap);
+
 		player.setCamDimensions(cam.getCamDim());
-		player.initAbilities(worldMap);
+		player.initAbilities(world);
 
 		gameInterface = new GameInterface(player.getPosition() , cam.getCamDim().x , cam.getCamDim().y);
 
 	}
 
-	/**
-	 *  Loads tiledMap and all information of com.identities and other positions
-	 */
-	public void loadMap() {
-		this.tiledMap = new TmxMapLoader().load("map3.tmx");
-
-		TiledMapTile destructionTile = tiledMap.getTileSets().getTileSet("tilea4mackeditFBU").getTile(555);;
-
-		MapLayers layers = tiledMap.getLayers();
-
-		MapProperties start = layers.get("START").getObjects().get(0).getProperties();
-		this.startPlace = new Vector2((Float) start.get("x"), (Float) start.get("y"));
-		this.startPlace.scl(unitScale);
-
-		ArrayList<Rune> runes = new ArrayList<Rune>();
-		MapObjects mapRunes = layers.get("RUNES").getObjects();
-
-		Vector2 tpPosition = null , tpDestiny = null;
-		for(MapObject o : mapRunes){
-			MapProperties p = o.getProperties();
-
-			String name = o.getName();
-			Vector2 pR = new Vector2( (Float)p.get("x"),(Float)p.get("y") ).scl(unitScale);
-
-			if(name.equals("SPEEDRUNE") ) runes.add( new SpeedRune(pR) );
-			else if(name.equals("SMALL_SIZERUNE")) runes.add(new SizeRune(pR,false));
-			else if(name.equals("BIG_SIZERUNE"))  runes.add(new SizeRune(pR,true));
-			else if(name.equals("DESTRUCTIONRUNE")) runes.add(new DestructionRune(pR));
-			else if(name.equals("TELEPORTATIONRUNE_0")) tpPosition = new Vector2(pR);
-			else if(name.equals("TELEPORTATIONRUNE_1")) tpDestiny = new Vector2(pR);
-			else if(name.equals("ENERGYRUNE")) runes.add(new EnergyRune(pR));
-
-		}
-		// betamap3 currently 16 runes
-
-		if( tpPosition!=null && tpDestiny!=null )
-			runes.add( new TeleportationRune(tpPosition,tpDestiny) );
-
-		worldMap = new WorldMap(layers,obstacles,runes,destructionTile,WORLD_WIDTH,WORLD_HEIGHT);
-/*
-		this.com.identities = new ArrayList<Obstacle>();
-		for(int i = 0; i < 10 ; i++){
-			Random random = new Random();
-			Obstacle o = new Obstacle(new Vector2(random.nextFloat()%32,random.nextFloat()%32));
-			this.com.identities.add(o);
-		}
-*/
-	}
-
-	public boolean isGameOver(){ return  gameOver;}
+	private boolean gameOver = false;
+	public boolean isGameOver(){ return gameOver;}
 
 	private void playerDied(){
-		gameOver = true;
 		wispDeadSound.play();
-		try {
-			wait(1500);
-		}catch (Exception E){}
+		gameOver = true;
 		System.exit(1);
 
 		//TODO HANDLER -> Android Game Over
@@ -171,34 +121,33 @@ public class FlowGame extends ApplicationAdapter {
 		GameOver.this.startActivity(intent);
 */
 		/*
-		this.player = new Player(tiledMap,this.startPlace,worldMap);
+		this.player = new Player(tiledMap,this.startPlace,world);
 		player.setCamDimensions(cam.getCamDim());
-		player.initAbilities(worldMap);
-		worldMap.setPlayer(player);
+		player.initAbilities(world);
+		world.setPlayer(player);
 		*/
 	}
 
+
 	@Override
 	public void render(){
-
 		handleInput();
 		myInputProcessor.destroy();
 
 		cam.render();
+		worldMap.update();
 
-		if ( worldMap.playerCollision() ) {
+		drawBatch();
+
+		if ( world.playerCollision() ) {
 			playerDied();
 		}
 		else {
 
 			player.updateRuneStatus(Gdx.graphics.getDeltaTime());
-			player.updateAbilities(worldMap);
+			player.updateAbilities(world);
 			player.update();
 		}
-
-		drawBatch();
-
-
 
 	}
 
@@ -213,18 +162,15 @@ public class FlowGame extends ApplicationAdapter {
 	private void drawBatch(){
 		batch.begin();
 
-	//	try {
-			// draw rectangle x y -> bottom left corner
+			worldMap.draw(batch,player.getPosition());
+
 			player.draw(batch);
 
 	//		gameInterface.draw(batch);
 
-			worldMap.draw(batch);
+			world.draw(batch);
 
 		//	font.draw(batch, "Player: " + player.getPosition().x + " : " + player.getPosition().y, 5 , 2 );
-	//	} catch( NullPointerException e ){
-	//		e.printStackTrace();
-	//	}
 
 		batch.end();
 	}
@@ -237,7 +183,7 @@ public class FlowGame extends ApplicationAdapter {
 		boolean speedRequested = false;
 		while (it.hasNext() && !speedRequested ){
 			Vector2 position = new Vector2(it.next());
-			if( player.speedRequest(position.scl(unitScale)) ) speedRequested = true;
+			if( player.speedRequest(position.scl(1/16f)) ) speedRequested = true;
 		}
 
 	//	gameInterface.update();
@@ -252,7 +198,7 @@ public class FlowGame extends ApplicationAdapter {
 			case (MyInputProcessor.TOUCH_DRAGGED ): {
 				// Screen position             // Center in the middle
 				Vector2 vworldDirection = myInputProcessor.getLastTouch();
-				vworldDirection.scl(unitScale);
+				vworldDirection.scl(1/16f);
 
 				player.updateDirection(vworldDirection);
 				player.setMoving(true);

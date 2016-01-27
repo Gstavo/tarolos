@@ -2,7 +2,7 @@ package com.flow.game.identities.identities.obstacle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.flow.game.identities.identities.WorldMap;
+import com.flow.game.identities.identities.World;
 
 import java.util.Collection;
 import java.util.Random;
@@ -22,9 +22,9 @@ public class JumpingObstacle extends Obstacle{
 
     }
 
-    public void updateMotion(WorldMap worldMap){
+    public void updateMotion(World world){
         Collection<Vector2> cPoints = collisionPoints();
-        if( worldMap.worldCellCollision( cPoints ) ){
+        if( world.worldCellCollision( cPoints ) ){
             directionChange();
         }
 

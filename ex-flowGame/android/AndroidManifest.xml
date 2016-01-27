@@ -4,6 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+
+
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="22" />
@@ -14,7 +16,7 @@
         android:theme="@style/GdxTheme" >
 
         <activity
-            android:name=".MenuActivity"
+            android:name=".WispV15"
             android:label="MenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,10 +37,22 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flow.game.android.MenuActivity" />
+                android:value=".WispV15" />
         </activity>
         <activity
-            android:name=".StatsActivity"
+        android:name=".StatsActivity"
+        android:label="@string/app_name">
+
+        <intent-filter>
+            <action android:name="android.intent.action.DEFAULT" />
+        </intent-filter>
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".WispV15" />
+    </activity>
+
+        <activity
+            android:name=".GameOver"
             android:label="@string/app_name">
 
             <intent-filter>
@@ -46,9 +60,10 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.flow.game.android.MenuActivity" />
+                android:value="com.flow.game.android.AndroidLauncher" />
         </activity>
 
     </application>
+
 
 </manifest>

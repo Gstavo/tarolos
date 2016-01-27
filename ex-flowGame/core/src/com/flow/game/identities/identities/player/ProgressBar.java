@@ -27,8 +27,9 @@ import com.flow.game.FlowGame;
            // platform.setSize(size.x,size.y);
             platform.draw(batch);
 
-            bar.setCenter(position.x, position.y);
-            bar.setSize((int) (size.x * (progress / 100f)), size.y*0.8f);
+            //bar.setCenter(position.x, position.y);
+            bar.setSize((int) ((size.x -0.2f) * (progress / 100f)), 0.3f);
+            bar.setPosition(position.x - size.x,position.y);
             bar.draw(batch);
 
         }
@@ -55,7 +56,7 @@ import com.flow.game.FlowGame;
             float radius = p.getTextureRadius();
 
             position = new Vector2(p.getPosition());
-            size = new Vector2(1.5f*radius, 0.2f);
+            size = new Vector2(1.5f*radius, 0.4f);
             position.sub( 0, radius  );
         }
         public void setProgress (float p) {

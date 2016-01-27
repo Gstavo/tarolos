@@ -1,33 +1,42 @@
 package com.flow.game.identities.identities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+
+import java.io.Serializable;
 
 /**
  * Created by Gustavo on 10/08/2015.
  */
-public class WorldCell {
+public class WorldCell implements Serializable {
 
-    private TiledMapTileLayer.Cell tiledCell;
-    private boolean collision;
+    private int type;
     private float hitPoints;
+    // To add texture
 
-    public WorldCell(TiledMapTileLayer.Cell tiledCell, boolean collision){
-        this.tiledCell = tiledCell;
-        this.collision = collision;
+    public WorldCell(int t){
+        this.type = t;
         this.hitPoints = 2;
     }
 
-    public boolean getCollision() {return collision;}
-    public TiledMapTileLayer.Cell getTiledCell() {return tiledCell;}
+    public WorldCell(WorldCell worldCell){
+/*
+        this.tiledCell = new TiledMapTileLayer.Cell();
+        tiledCell.setTile( worldCell.getTiledCell().getTile() );
+*/
+        this.type = worldCell.getType();
+        this.hitPoints = worldCell.getHitPoints();
+    }
+
+    public int getType(){ return type; }
+    public boolean getCollision() {return type==1 ;}
+  //  public TiledMapTileLayer.Cell getTiledCell() {return tiledCell;}
     public float getHitPoints() {return hitPoints;}
 
     public float damage(float hp,TiledMapTile tile){
         float damage = hp;
         this.hitPoints-=hp;
         if(hitPoints <= 0) {
-            tiledCell.setTile(tile);
+    //        tiledCell.setTile(tile);
             killCell();
             damage-=hitPoints; // removes damage on dead
         }
@@ -35,11 +44,11 @@ public class WorldCell {
     }
 
     public void killCell(){
-
-        collision =false;
+        type = WorldMap.PATH_TILE;
+        hitPoints = 0;
     }
 
-
+/*
     public boolean equals(Object o){
         if(this == o) return true;
         boolean r = false;
@@ -49,5 +58,5 @@ public class WorldCell {
         }
         return r;
     }
-
+*/
 }

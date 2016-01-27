@@ -1,13 +1,12 @@
 package com.flow.game.identities.identities.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.flow.game.identities.identities.WorldMap;
+import com.flow.game.identities.identities.World;
 import com.flow.game.identities.identities.runes.Rune;
 
 import java.util.ArrayList;
@@ -19,8 +18,9 @@ import java.util.HashSet;
  */
 public class Player {
 
-    private static final float RADIUS = 0.5f;
     private static final float EXTRARADIUS = 2;
+
+    public static float playerBaseSpeed = 8f;
 
     private float playerSpeed;
     private float speed = 2; // unidades / s
@@ -35,11 +35,21 @@ public class Player {
     private Vector2 direction;
     private Vector2 camDimensions;
 
+
+    /**
+     *  r 0.5 -> 10 camW
+     *      r*x -> 30 camW
+     *      x = 1.5f
+     *
+     *      textureradius =
+     */
+    private float camResize = 1.5f;
     private Sprite wisp;
-    private float textureRadius = 0.8f;
+    public static final float RADIUS = 0.5f;
+    private float textureRadius = 0.8f*camResize;
     private float radius;
-    private final float initMaxNucleoRadius = 0.8f;
-    private final float initMinNucleoRadius = 0.2f;
+    private final float initMaxNucleoRadius = 0.8f * camResize;
+    private final float initMinNucleoRadius = 0.2f * camResize;
 
     private Sprite nucleo;
     private float nucleoRadius;
@@ -71,14 +81,15 @@ public class Player {
         wispSound.loop();
     }
 */
-    public Player(TiledMap tMap, Vector2 position, WorldMap worldMap){
+    public Player(TiledMap tMap,World world){
         this.moving = false;
+
+        this.position = world.getStartPlace();
         this.initialPosition = new Vector2(position);
 
-
-
-        this.position = new Vector2(position);
-        playerSpeed = speed = 2f;
+        // Old speed 2 -> 32
+        // new speed s -> 512 s =32
+        playerSpeed = speed = playerBaseSpeed;
         extraSpeed = 0;
         extraTimeSpeed = 0;
 
@@ -248,9 +259,6 @@ public class Player {
 
     }
 
-    public void update(){
-        motor.updateMotor(delta,0f);
-    }
 
     public void setNoMovementTime(float t){ noMovementTime = t;}
     public void setExtraSpeed(float speed){ this.extraSpeed = speed; }
@@ -284,27 +292,32 @@ public class Player {
         return r;
     }
 
-    public LightDestruction getLightDestruction(){ return lightDestruction; }
-
-    public void initAbilities(WorldMap worldMap){
-        this.lightDestruction = new LightDestruction( position , radius);
-        this.blastExplosion = new BlastExplosion(worldMap,camDimensions);
+    public void update(){
+        motor.updateMotor(delta,0f);
     }
 
-    public void updateAbilities(WorldMap worldMap){
 
-        updateLightDestruction(worldMap);
+    public LightDestruction getLightDestruction(){ return lightDestruction; }
+
+    public void initAbilities(World world){
+        this.lightDestruction = new LightDestruction( position , radius);
+        this.blastExplosion = new BlastExplosion(world,camDimensions);
+    }
+
+    public void updateAbilities(World world){
+
+        updateLightDestruction(world);
 
     }
 
     public void blastDemand(){ blastExplosion.explode(this);}
 
-    public void updateLightDestruction(WorldMap worldMap){
+    public void updateLightDestruction(World world){
         //needed cuz tp
         lightDestruction.setPosition(position);
         //needed cuz sizeRune
         lightDestruction.updatePlayerRadius(radius);
-        float damage = lightDestruction.destroyTargets(worldMap);
+        float damage = world.playerLightCollision(lightDestruction);
         float consumption = lightDestruction.getConsumption(damage);
         motor.subEnergy(consumption);
     }

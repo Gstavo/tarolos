@@ -1,0 +1,8 @@
+
+energy bar platform
+w 719
+h 45
+
+energy bar
+width 693
+height 24

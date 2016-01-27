@@ -3,7 +3,6 @@ package com.flow.game.identities.identities.obstacle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.flow.game.identities.identities.WorldMap;
 
 /**
  * Created by Gustavo on 09/08/2015.

@@ -48,6 +48,13 @@ public abstract class Rune {
         return ( p.x > min.x  && p.x < max.x && p.y > min.y  && p.y < max.y );
     }
 
+    public boolean centerCollision(Player p){
+        float r = p.getRadius();
+        Vector2 c = new Vector2(p.getPosition());
+        c.sub(position);
+        return ( c.x * c.x  +  c.y * c.y < r*r );
+    }
+
     // Override this function and call it to add extra effects
     public void playerEffect(Player p) {
         p.addRune(this);
